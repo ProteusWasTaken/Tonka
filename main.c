@@ -99,7 +99,14 @@ void printHelp(void) {
   printColor(YELLOW, " - Chess\n");
 }
 void valorant(void) {
-  int deaths, kills, assists, total;
+  int deaths, kills, assists, roundsWon, roundsLoss;
+  double total;
+
+  printColor(GREEN, "Enter the number of round won: ");
+  scanf("%d", &roundsWon);
+
+  printColor(RED, "Enter the number of losing rounds: ");
+  scanf("%d", &roundsLoss);
 
   printColor(BLUE, "Enter the number of Kills: ");
   scanf("%d", &kills);
@@ -110,10 +117,11 @@ void valorant(void) {
   printColor(MAGENTA, "Enter the number of Assists: ");
   scanf("%d", &assists);
 
-  total = 10 + (3 * deaths) - (2 * kills) - (assists / 2);
+  total = 2 * (5 + (2 * deaths) - (1.5 * kills) - (assists / 1.5) -
+               ((double)roundsWon / 2) + (double)roundsLoss / 2);
 
   printColor(GREEN, "Total Reps = ");
-  printf("%s%d%s", YELLOW, total, RESET);
+  printf("%s%f%s", YELLOW, ceil(total), RESET);
 }
 void minecraft(void) {
   int deaths, timePlayed, levelsXP, total;
