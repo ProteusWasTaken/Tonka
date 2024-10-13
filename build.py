@@ -76,11 +76,11 @@ def main(build_mode):
         print(Fore.YELLOW + f"Build duration: {end_time - start_time:.2f} seconds.")
         return
 
-    print(Fore.GREEN + "Project Tree:")
-    try:
-        subprocess.run(["tree"], check=True)
-    except subprocess.CalledProcessError as e:
-        print(Fore.RED + f"Failed to get Tree structure of project: {e}", file=sys.stderr)
+#    print(Fore.GREEN + "Project Tree:")
+#    try:
+#        subprocess.run(["tree"], check=True)
+#    except subprocess.CalledProcessError as e:
+#        print(Fore.RED + f"Failed to get Tree structure of project: {e}", file=sys.stderr)
 
     print(Fore.GREEN + "Current Tokei Stats:")
     try:
