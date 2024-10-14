@@ -1,30 +1,3 @@
-// Colors for text
-#define BLACK "\033[0;90m"
-#define RED "\033[0;91m"
-#define GREEN "\033[0;92m"
-#define YELLOW "\033[0;93m"
-#define BLUE "\033[0;94m"
-#define MAGENTA "\033[0;95m"
-#define CYAN "\033[0;96m"
-#define WHITE "\033[0;97m"
-#define RESET "\033[0m"
-
-#include <math.h>
-#include <stdio.h>
-#include <string.h>
-
-// Function Declarations
-void printColor(const char *colorCode, const char *string1);
-void printHelp(void);
-void valorant(void);
-void minecraft(void);
-void fortnite(void);
-void chess(void);
-
-// Variable Definitions
-char games[25][10] = {"valorant", "val",       "fn",   "fortnite",
-                      "mc",       "minecraft", "chess"};
-int numberOfGames = 7;
 
 // Main function
 int main(int argc, char *argv[]) {

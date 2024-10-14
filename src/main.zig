@@ -1,23 +1,76 @@
 const std = @import("std");
 
-pub fn main() !void {
-    // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
-    std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
+const BLACK = "\x1b[0;90m";
+const RED = "\x1b[0;91m";
+const GREEN = "\x1b[0;92m";
+const YELLOW = "\x1b[0;93m";
+const BLUE = "\x1b[0;94m";
+const MAGENTA = "\x1b[0;95m";
+const CYAN = "\x1b[0;96m";
+const WHITE = "\x1b[0;97m";
+const RESET = "\x1b[0m";
 
-    // stdout is for the actual output of your application, for example if you
-    // are implementing gzip, then only the compressed bytes should be sent to
-    // stdout, not any debugging messages.
-    const stdout_file = std.io.getStdOut().writer();
-    var bw = std.io.bufferedWriter(stdout_file);
-    const stdout = bw.writer();
-
-    try stdout.print("Run `zig build test` to run the tests.\n", .{});
-
-    try bw.flush(); // don't forget to flush!
+// Functions
+fn printColor(colorCode: []const u8, inputString: []const u8) void {
+    const stdout = std.io.getStdOut().writer();
+    stdout.print("{s}{s}{s}", .{ colorCode, inputString, RESET }) catch unreachable;
 }
+fn printHelp() void {}
+fn valorant() void {}
+fn minecraft() void {}
+fn fortnite() void {}
+fn chess() void {}
 
-test "simple test" {
-    var list = std.ArrayList(i32).init(std.testing.allocator);
-    try list.append(42);
-    try std.testing.expectEqual(@as(i32, 42), list.pop());
+// Variables
+const gamesList = [_][]const u8{ "valorant", "val", "fn", "fortnite", "mc", "minecraft", "chess" };
+const numberOfGames = @countOf(gamesList);
+
+pub fn main() void {
+    const args = std.os.argv();
+    const argc = args.len;
+
+    if (argc < 2) {
+        printColor(RED, "Please provide a game to play using --<game>!\n");
+        return;
+    }
+
+    const userInput = args[1];
+
+    if (std.mem.eql(u8, userInput, "--help")) {
+        printHelp();
+        return;
+    }
+
+    if (!std.mem.startsWith(u8, userInput, "--")) {
+        printColor(RED, "Invalid format. Please use --help\n");
+        return;
+    }
+
+    const userGame = userInput[2..]; // Skip the '--'
+    var gameFound = false;
+
+    for (game in gamesList) {
+        if (std.mem.eql(u8, userGame, game)) {
+            gameFound = true;
+            break;
+        }
+    }
+
+    if (gameFound) {
+        std.debug.print("Running the function for: {}\n", .{userGame});
+        if (std.mem.eql(u8, userGame, "minecraft") or std.mem.eql(u8, userGame, "mc")) {
+            minecraft();
+        } else if (std.mem.eql(u8, userGame, "fortnite") or std.mem.eql(u8, userGame, "fn")) {
+            fortnite();
+        } else if (std.mem.eql(u8, userGame, "valorant") or std.mem.eql(u8, userGame, "val")) {
+            valorant();
+        } else if (std.mem.eql(u8, userGame, "chess")) {
+            chess();
+        }
+    } else {
+        std.debug.print("Game '{}' not recognized. Available games are:\n", .{userGame});
+            for (game in gamesList) {
+            std.debug.print("# {}\n", .{game}) catch {};
+        }
+    }
 }

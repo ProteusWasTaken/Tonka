@@ -8,6 +8,7 @@ from colorama import init, Fore
 # Initialize Colorama
 init()
 
+
 def get_path(path):
     """Determine the correct path separator based on the OS."""
     if platform.system() == "Windows":
@@ -62,12 +63,14 @@ def main(build_mode):
     # Set the path to the Zig source file
     source_file = get_path("./src/main.zig")
 
+    exeName = "fitnessGames.out"
+
     # Start the timer
     start_time = time.time()
 
     # Build the Zig executable with the specified optimization mode
     try:
-        subprocess.run(["zig", "build-exe", source_file, "-O", build_mode], check=True)
+        subprocess.run(["zig", "build-exe", source_file, "-O", build_mode, "-femit-bin", exeName], check=True)
         end_time = time.time()
         print(Fore.GREEN + f"Build completed in {end_time - start_time:.2f} seconds.")
     except subprocess.CalledProcessError as e:
