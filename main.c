@@ -140,37 +140,3 @@ void minecraft(void) {
   printColor(GREEN, "Total Reps = ");
   printf("%s%d%s", YELLOW, total, RESET);
 }
-void fortnite(void) {
-  int deaths, kills, assists, total;
-
-  printColor(BLUE, "Enter the number of Kills: ");
-  scanf("%d", &kills);
-
-  printColor(RED, "Enter the number of Deaths: ");
-  scanf("%d", &deaths);
-
-  printColor(MAGENTA, "Enter the number of Assists: ");
-  scanf("%d", &assists);
-
-  total = 10 + (3 * deaths) - (2 * kills) - (assists / 2);
-
-  printColor(GREEN, "Total Reps = ");
-  printf("%s%d%s", YELLOW, total, RESET);
-}
-void chess(void) {
-  int piecesTaken, piecesStolen, winORLose, total;
-
-  printColor(BLUE, "Enter the number of Kills: ");
-  scanf("%d", &piecesTaken);
-
-  printColor(RED, "Enter the number of Deaths: ");
-  scanf("%d", &piecesStolen);
-
-  printColor(MAGENTA, "Enter the number of Assists: ");
-  scanf("%d", &winORLose);
-
-  total = 10 + (3 * piecesStolen) - (2 * piecesTaken) - (winORLose / 2);
-
-  printColor(GREEN, "Total Reps = ");
-  printf("%s%d%s", YELLOW, total, RESET);
-}
