@@ -1,6 +1,8 @@
 const std = @import("std");
 
-pub fn main() void {}
+pub fn main() void {
+    // Add CLI arguments
+}
 
 const Color = struct {
     const BLACK = "\x1b[0;90m";
@@ -39,11 +41,36 @@ fn getUserInput() u8 {
 const games = struct {
     const list = [_][]const u8{ "val", "valorant", "fn", "fortnite", "mc", "minecraft", "chess" };
 
-    fn printHelp() void {}
+    fn printHelp() void {
+        // List possible commands
+    }
 
-    fn valorant() void {}
+    //Create a function to list games
 
-    fn minecraft() void {}
+    fn valorant() void {
+        const roundsWon: u8 = getUserInput();
+        const roundsLoss: u8 = getUserInput();
+        const kills: u8 = getUserInput();
+        const deaths: u8 = getUserInput();
+        const assists: u8 = getUserInput();
+
+        const total = 2 * (5 + (2 * deaths) - (1.5 * kills) - (assists / 1.5) -
+            (roundsWon / 2) + roundsLoss / 2);
+
+        printColor(Color.GREEN, "Total Reps: ");
+        std.debug.print("{}\n", .{total});
+    }
+
+    fn minecraft() void {
+        const deaths: u8 = getUserInput();
+        const timePlayedHours: u8 = getUserInput();
+        const levelsXP: u8 = getUserInput();
+
+        const total = 10 + (3 * deaths) - (2 * timePlayedHours) - (levelsXP / 2);
+
+        printColor(Color.GREEN, "Total Reps: ");
+        std.debug.print("{}\n", .{total});
+    }
 
     fn fortnite() void {
         const elims: u8 = getUserInput();
