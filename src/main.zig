@@ -10,11 +10,12 @@ const CYAN = "\x1b[0;96m";
 const WHITE = "\x1b[0;97m";
 const RESET = "\x1b[0m";
 
-// Functions
 fn printColor(colorCode: []const u8, inputString: []const u8) void {
     const stdout = std.io.getStdOut().writer();
     stdout.print("{s}{s}{s}", .{ colorCode, inputString, RESET }) catch unreachable;
 }
+
+
 fn printHelp() void {}
 fn valorant() void {}
 fn minecraft() void {}
