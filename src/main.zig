@@ -1,7 +1,24 @@
 const std = @import("std");
 
-pub fn main() void {
-    // Add CLI arguments
+pub fn main() !void {
+    const stdout = std.io.getStdOut().writer();
+
+    const args = try std.process.argsAlloc(std.heap.page_allocator);
+    defer std.process.argsFree(std.heap.page_allocator, args);
+
+    if (args.len < 2) return error.ExpectedArgument;
+
+    if (std.mem.eql(u8, args[1], "--version") or std.mem.eql(u8, args[1], "-v")) {
+        try stdout.print("Program version: 0.1.0\n", .{});
+        return;
+    }
+
+    if (std.mem.eql(u8, args[1], "--games") or std.mem.eql(u8, args[1], "-g")) {
+        for (games.list) |game| {
+            std.debug.print("{s}\n", .{game});
+        }
+        return;
+    }
 }
 
 const Color = struct {
