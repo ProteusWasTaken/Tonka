@@ -1,1 +1,2 @@
-fitGame.exe
+/zig-out
+/.zig-cache
