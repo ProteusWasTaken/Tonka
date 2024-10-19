@@ -17,8 +17,7 @@ pub fn main() !void {
     }
 
     if (std.mem.eql(u8, args[1], "--exercise") or std.mem.eql(u8, args[1], "-e")) {
-        commands.getRandomExercise();
-        std.debug.print("Random number is: {!}\n", .{tools.randomNumberGenerator()});
+        try commands.getRandomExercise();
         return;
     }
 }
@@ -58,14 +57,14 @@ const tools = struct {
         return usersInput;
     }
 
-    fn randomNumberGenerator() !u8 {
+    fn randomNumberGenerator(max: u8) !u8 {
         var prng = std.rand.DefaultPrng.init(blk: {
             var seed: u64 = undefined;
             try std.posix.getrandom(std.mem.asBytes(&seed));
             break :blk seed;
         });
         const rand = prng.random();
-        return rand.int(u8);
+        return rand.int(u8) % max;
     }
 };
 
@@ -80,9 +79,10 @@ const commands = struct {
         }
     }
 
-    fn getRandomExercise() void {
-        //        const randomExercise: u8 = tools.randomNumberGenerator();
-        //        std.debug.print("{Your exercise is: }\n", .{exercises.list[randomExercise]});
+    fn getRandomExercise() !void {
+        const exerciseArrayLength: u8 = exercises.list.len;
+        const chosenExercise: u8 = try tools.randomNumberGenerator(exerciseArrayLength);
+        std.debug.print("Your exercise is: {s}\n", .{exercises.list[chosenExercise]});
     }
 };
 
