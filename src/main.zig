@@ -6,6 +6,11 @@ pub fn main() !void {
 
     if (args.len < 2) return error.ExpectedArgument;
 
+    if (std.mem.eql(u8, args[1], "--help") or std.mem.eql(u8, args[1], "-h")) {
+        commands.printHelp();
+        return;
+    }
+
     if (std.mem.eql(u8, args[1], "--version") or std.mem.eql(u8, args[1], "-v")) {
         commands.printVersion();
         return;
@@ -69,7 +74,33 @@ const tools = struct {
 };
 
 const commands = struct {
+    fn printHelp() void {
+        tools.printColor(Color.YELLOW, "Tonka Version 0.1.0\n");
+        tools.printColor(Color.YELLOW, "Made with Zig version 0.13.0\n");
+        tools.printColor(Color.RESET, "\n");
+        tools.printColor(Color.GREEN, "USAGE:\n");
+        tools.printColor(Color.MAGENTA, "    tonka [FLAGS] [OPTIONS]\n");
+        tools.printColor(Color.RESET, "\n");
+        tools.printColor(Color.GREEN, "FLAGS:\n");
+        tools.printColor(Color.MAGENTA, "    -h, --help                            Prints help information.\n");
+        tools.printColor(Color.MAGENTA, "    -v, --version                         Shows Tonka version.\n");
+        tools.printColor(Color.MAGENTA, "    -g, --games                           List suppourted games.\n");
+        tools.printColor(Color.MAGENTA, "    -e, --exercises                       Returns a random exercise.\n");
+        tools.printColor(Color.MAGENTA, "    -c {gameName}, --calc {gameName}      Prompts for passed game.\n");
+        tools.printColor(Color.RESET, "\n");
+    }
+
+    fn tonkaArt() void {
+        tools.printColor(Color.CYAN, "████████╗ ██████╗ ███╗   ██╗██╗  ██╗ █████╗\n");
+        tools.printColor(Color.CYAN, "╚══██╔══╝██╔═══██╗████╗  ██║██║ ██╔╝██╔══██╗\n");
+        tools.printColor(Color.CYAN, "   ██║   ██║   ██║██╔██╗ ██║█████╔╝ ███████║\n");
+        tools.printColor(Color.CYAN, "   ██║   ██║   ██║██║╚██╗██║██╔═██╗ ██╔══██║\n");
+        tools.printColor(Color.CYAN, "   ██║   ╚██████╔╝██║ ╚████║██║  ██╗██║  ██║\n");
+        tools.printColor(Color.CYAN, "   ╚═╝    ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝\n");
+    }
+
     fn printVersion() void {
+        tonkaArt();
         tools.printColor(Color.YELLOW, "Tonka Version 0.1.0\n");
     }
 
@@ -92,10 +123,6 @@ const exercises = struct {
 
 const games = struct {
     const list = [_][]const u8{ "val", "valorant", "fn", "fortnite", "mc", "minecraft", "chess" };
-
-    fn printHelp() void {
-        // List possible commands
-    }
 
     fn coding() void {}
 
