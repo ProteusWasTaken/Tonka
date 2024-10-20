@@ -21,6 +21,27 @@ pub fn main() !void {
         return;
     }
 
+    if (std.mem.eql(u8, args[1], "--calc") or std.mem.eql(u8, args[1], "-c")) {
+        if (args.len > 2) {
+            if (std.mem.eql(u8, args[2], "val") or std.mem.eql(u8, args[2], "valorant")) {
+                games.valorant();
+            }
+            if (std.mem.eql(u8, args[2], "mc") or std.mem.eql(u8, args[2], "minecraft")) {
+                games.minecraft();
+            }
+            if (std.mem.eql(u8, args[2], "fn") or std.mem.eql(u8, args[2], "fortnite")) {
+                games.fortnite();
+            }
+            if (std.mem.eql(u8, args[2], "code")) {
+                games.coding();
+            }
+            if (std.mem.eql(u8, args[2], "chess")) {
+                games.chess();
+            }
+        }
+        return;
+    }
+
     if (std.mem.eql(u8, args[1], "--exercise") or std.mem.eql(u8, args[1], "-e")) {
         try commands.getRandomExercise();
         return;
@@ -30,11 +51,6 @@ pub fn main() !void {
         const random_value = try tools.randomNumberGenerator(0, 100);
         tools.printColor(Color.GREEN, "Your random number is: ");
         std.debug.print("{}\n", .{random_value});
-        return;
-    }
-
-    if (std.mem.eql(u8, args[1], "--test") or std.mem.eql(u8, args[1], "-t")) {
-        games.valorant();
         return;
     }
 }
@@ -131,14 +147,14 @@ const exercises = struct {
 };
 
 const games = struct {
-    const list = [_][]const u8{ "val", "valorant", "fn", "fortnite", "mc", "minecraft", "chess" };
+    const list = [_][]const u8{ "valorant", "fortnite", "minecraft", "chess" };
 
     // Need a better formula this was just a thrown together one
     fn coding() void {
         tools.printColor(Color.GREEN, "Enter how long you spent coding in hours: ");
-        const timeSpentHours: i8 = tools.getUserInput();
+        const timeSpentHours: u8 = tools.getUserInput();
         tools.printColor(Color.GREEN, "Enter how many lines of code you altered: ");
-        const linesOfCodeChanged: i8 = tools.getUserInput();
+        const linesOfCodeChanged: u8 = tools.getUserInput();
 
         const total = (timeSpentHours * 25) - (linesOfCodeChanged / 4);
 
@@ -192,6 +208,7 @@ const games = struct {
         std.debug.print("{}\n", .{total});
     }
 
+    // NOT COMPLETE
     fn chess() void {
         tools.printColor(Color.YELLOW, "WIP");
         tools.printColor(Color.GREEN, "Enter total pieces you took: ");
