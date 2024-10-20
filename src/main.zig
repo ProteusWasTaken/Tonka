@@ -83,13 +83,14 @@ const commands = struct {
         tools.printColor(Color.YELLOW, "Made with Zig version 0.13.0\n");
         tools.printColor(Color.RESET, "\n");
         tools.printColor(Color.GREEN, "USAGE:\n");
-        tools.printColor(Color.MAGENTA, "    tonka [FLAGS] [OPTIONS]\n");
+        tools.printColor(Color.MAGENTA, "    tonka [FLAGS]\n");
         tools.printColor(Color.RESET, "\n");
         tools.printColor(Color.GREEN, "FLAGS:\n");
         tools.printColor(Color.MAGENTA, "    -h, --help                            Prints help information.\n");
         tools.printColor(Color.MAGENTA, "    -v, --version                         Shows Tonka version.\n");
         tools.printColor(Color.MAGENTA, "    -g, --games                           List suppourted games.\n");
         tools.printColor(Color.MAGENTA, "    -e, --exercises                       Returns a random exercise.\n");
+        tools.printColor(Color.MAGENTA, "    -r, --random                    Returns a random exercise.\n");
         tools.printColor(Color.MAGENTA, "    -c {gameName}, --calc {gameName}      Prompts for passed game.\n");
         tools.printColor(Color.RESET, "\n");
     }
@@ -128,7 +129,12 @@ const exercises = struct {
 const games = struct {
     const list = [_][]const u8{ "val", "valorant", "fn", "fortnite", "mc", "minecraft", "chess" };
 
-    fn coding() void {}
+    fn coding() void {
+        const timeSpentHours: u8 = tools.getUserInput();
+        const totalLinesOfCode: u8 = tools.getUserInput();
+        const
+
+    þ
 
     fn valorant() void {
         const roundsWon: u8 = tools.getUserInput();
