@@ -25,10 +25,16 @@ pub fn main() !void {
         try commands.getRandomExercise();
         return;
     }
+
     if (std.mem.eql(u8, args[1], "--random") or std.mem.eql(u8, args[1], "-r")) {
         const random_value = try tools.randomNumberGenerator(0, 100);
         tools.printColor(Color.GREEN, "Your random number is: ");
         std.debug.print("{}\n", .{random_value});
+        return;
+    }
+
+    if (std.mem.eql(u8, args[1], "--test") or std.mem.eql(u8, args[1], "-t")) {
+        games.valorant();
         return;
     }
 }
@@ -62,7 +68,7 @@ const tools = struct {
         const line = std.mem.trim(u8, emptyLine, "\r");
 
         const usersInput = std.fmt.parseInt(u8, line, 10) catch {
-            printColor(Color.red, "Please enter a valid number.\n");
+            printColor(Color.RED, "Please enter a valid number.\n");
             return 0;
         };
         return usersInput;
@@ -96,12 +102,10 @@ const commands = struct {
     }
 
     fn tonkaArt() void {
-        tools.printColor(Color.CYAN, "████████╗ ██████╗ ███╗   ██╗██╗  ██╗ █████╗\n");
-        tools.printColor(Color.CYAN, "╚══██╔══╝██╔═══██╗████╗  ██║██║ ██╔╝██╔══██╗\n");
-        tools.printColor(Color.CYAN, "   ██║   ██║   ██║██╔██╗ ██║█████╔╝ ███████║\n");
-        tools.printColor(Color.CYAN, "   ██║   ██║   ██║██║╚██╗██║██╔═██╗ ██╔══██║\n");
-        tools.printColor(Color.CYAN, "   ██║   ╚██████╔╝██║ ╚████║██║  ██╗██║  ██║\n");
-        tools.printColor(Color.CYAN, "   ╚═╝    ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝\n");
+        tools.printColor(Color.CYAN, " ____ ____ ____ ____ ____ \n");
+        tools.printColor(Color.CYAN, "||T |||o |||n |||k |||a ||\n");
+        tools.printColor(Color.CYAN, "||__|||__|||__|||__|||__||\n");
+        tools.printColor(Color.CYAN, "|/__\\|/__\\|/__\\|/__\\|/__\\|\n");
     }
 
     fn printVersion() void {
@@ -129,30 +133,43 @@ const exercises = struct {
 const games = struct {
     const list = [_][]const u8{ "val", "valorant", "fn", "fortnite", "mc", "minecraft", "chess" };
 
+    // Need a better formula this was just a thrown together one
     fn coding() void {
-        const timeSpentHours: u8 = tools.getUserInput();
-        const totalLinesOfCode: u8 = tools.getUserInput();
-        const
+        tools.printColor(Color.GREEN, "Enter how long you spent coding in hours: ");
+        const timeSpentHours: i8 = tools.getUserInput();
+        tools.printColor(Color.GREEN, "Enter how many lines of code you altered: ");
+        const linesOfCodeChanged: i8 = tools.getUserInput();
 
-    þ
+        const total = (timeSpentHours * 25) - (linesOfCodeChanged / 4);
+
+        tools.printColor(Color.GREEN, "Total Reps: ");
+        std.debug.print("{}\n", .{total});
+    }
 
     fn valorant() void {
-        const roundsWon: u8 = tools.getUserInput();
-        const roundsLoss: u8 = tools.getUserInput();
-        const kills: u8 = tools.getUserInput();
-        const deaths: u8 = tools.getUserInput();
-        const assists: u8 = tools.getUserInput();
+        tools.printColor(Color.GREEN, "Enter rounds won: ");
+        const roundsWon: i16 = tools.getUserInput();
+        tools.printColor(Color.GREEN, "Enter rounds lossed: ");
+        const roundsLoss: i16 = tools.getUserInput();
+        tools.printColor(Color.GREEN, "Enter your total kills: ");
+        const kills: i16 = tools.getUserInput();
+        tools.printColor(Color.GREEN, "Enter your total deaths: ");
+        const deaths: i16 = tools.getUserInput();
+        tools.printColor(Color.GREEN, "Enter your total assists: ");
+        const assists: i16 = tools.getUserInput();
 
-        const total = 2 * (5 + (2 * deaths) - (1.5 * kills) - (assists / 1.5) -
-            (roundsWon / 2) + roundsLoss / 2);
+        const total: i16 = 2 * (5 + (2 * deaths) - (kills) - (@divTrunc(assists, 2)) - (@divTrunc(roundsWon, 2)) + (@divTrunc(roundsLoss, 2)));
 
         tools.printColor(Color.GREEN, "Total Reps: ");
         std.debug.print("{}\n", .{total});
     }
 
     fn minecraft() void {
+        tools.printColor(Color.GREEN, "Enter deaths during session: ");
         const deaths: u8 = tools.getUserInput();
+        tools.printColor(Color.GREEN, "Enter hours played for the session: ");
         const timePlayedHours: u8 = tools.getUserInput();
+        tools.printColor(Color.GREEN, "Enter total XP: ");
         const levelsXP: u8 = tools.getUserInput();
 
         const total = 10 + (3 * deaths) - (2 * timePlayedHours) - (levelsXP / 2);
@@ -162,8 +179,11 @@ const games = struct {
     }
 
     fn fortnite() void {
+        tools.printColor(Color.GREEN, "Enter total eliminations: ");
         const elims: u8 = tools.getUserInput();
+        tools.printColor(Color.GREEN, "Enter total knockdowns and/or deaths: ");
         const deathKnock: u8 = tools.getUserInput();
+        tools.printColor(Color.GREEN, "Enter total assists: ");
         const assists: u8 = tools.getUserInput();
 
         const total: i16 = 10 + (3 * deathKnock) - (2 * elims) - (assists / 2);
@@ -173,8 +193,12 @@ const games = struct {
     }
 
     fn chess() void {
+        tools.printColor(Color.YELLOW, "WIP");
+        tools.printColor(Color.GREEN, "Enter total pieces you took: ");
         const piecesTaken: u8 = tools.getUserInput();
+        tools.printColor(Color.GREEN, "Enter total pieces you had taken: ");
         const piecesStolen: u8 = tools.getUserInput();
+        tools.printColor(Color.GREEN, "Are ya winning son?");
         const winOrLose: u8 = tools.getUserInput();
 
         const total: i16 = 10 + (3 * piecesStolen) - (2 * piecesTaken) - (winOrLose / 2);
