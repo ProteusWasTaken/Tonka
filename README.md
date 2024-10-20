@@ -9,3 +9,4 @@ Exercise a little more.
 ## To Do
 - [ ] Add proper error handling
 - [ ] Progress Inidicators, spinners or progress bars.
+- [ ] GUI with raygui?

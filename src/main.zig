@@ -25,6 +25,12 @@ pub fn main() !void {
         try commands.getRandomExercise();
         return;
     }
+    if (std.mem.eql(u8, args[1], "--random") or std.mem.eql(u8, args[1], "-r")) {
+        const random_value = try tools.randomNumberGenerator(0, 100);
+        tools.printColor(Color.GREEN, "Your random number is: ");
+        std.debug.print("{}\n", .{random_value});
+        return;
+    }
 }
 
 const Color = struct {
@@ -62,14 +68,12 @@ const tools = struct {
         return usersInput;
     }
 
-    fn randomNumberGenerator(max: u8) !u8 {
-        var prng = std.rand.DefaultPrng.init(blk: {
-            var seed: u64 = undefined;
-            try std.posix.getrandom(std.mem.asBytes(&seed));
-            break :blk seed;
-        });
-        const rand = prng.random();
-        return rand.int(u8) % max;
+    fn randomNumberGenerator(min: u8, max: u8) !u8 {
+        var prng: std.rand.DefaultPrng = undefined;
+        var seed: u64 = undefined;
+        try std.posix.getrandom(std.mem.asBytes(&seed));
+        prng = std.rand.DefaultPrng.init(seed);
+        return prng.random().intRangeAtMost(u8, min, max);
     }
 };
 
@@ -112,7 +116,7 @@ const commands = struct {
 
     fn getRandomExercise() !void {
         const exerciseArrayLength: u8 = exercises.list.len;
-        const chosenExercise: u8 = try tools.randomNumberGenerator(exerciseArrayLength);
+        const chosenExercise: u8 = try tools.randomNumberGenerator(0, exerciseArrayLength - 1);
         std.debug.print("Your exercise is: {s}\n", .{exercises.list[chosenExercise]});
     }
 };
