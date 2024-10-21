@@ -112,7 +112,7 @@ const commands = struct {
         tools.printColor(Color.MAGENTA, "    -v, --version                         Shows Tonka version.\n");
         tools.printColor(Color.MAGENTA, "    -g, --games                           List suppourted games.\n");
         tools.printColor(Color.MAGENTA, "    -e, --exercises                       Returns a random exercise.\n");
-        tools.printColor(Color.MAGENTA, "    -r, --random                    Returns a random exercise.\n");
+        tools.printColor(Color.MAGENTA, "    -r, --random                          Returns a random exercise.\n");
         tools.printColor(Color.MAGENTA, "    -c {gameName}, --calc {gameName}      Prompts for passed game.\n");
         tools.printColor(Color.RESET, "\n");
     }
@@ -126,7 +126,7 @@ const commands = struct {
 
     fn printVersion() void {
         tonkaArt();
-        tools.printColor(Color.YELLOW, "Tonka Version 0.1.0\n");
+        tools.printColor(Color.YELLOW, "Tonka Version 1.0.0\n");
     }
 
     fn listGames() void {
@@ -147,7 +147,7 @@ const exercises = struct {
 };
 
 const games = struct {
-    const list = [_][]const u8{ "valorant", "fortnite", "minecraft", "chess" };
+    const list = [_][]const u8{ "Valorant", "Fortnite", "Minecraft", "Chess" };
 
     // Need a better formula this was just a thrown together one
     fn coding() void {
